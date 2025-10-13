@@ -35,7 +35,7 @@ class UserManager(DjangoUserManager):
       raise ValueError(_('A password address must be provided.'))
     
     username = generate_username()
-    email = self.normalize_email
+    email = self.normalize_email(email)
     validate_email_address(email)
 
     user = self.model(

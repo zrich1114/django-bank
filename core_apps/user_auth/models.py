@@ -45,7 +45,7 @@ class User(AbstractUser):
     max_length=30,
     choices=SecurityQuestions.choices,
   )
-  security_anser = models.CharField(_('Security Answer'), max_length=30)
+  security_answer = models.CharField(_('Security Answer'), max_length=30)
   email = models.EmailField(_('Email'), unique=True, db_index=True)
   first_name = models.CharField(_('First Name'), max_length=30)
   middle_name = models.CharField(_('Middle Name'), max_length=30, blank=True, null=True)
