@@ -46,7 +46,7 @@ class ProfileAdmin(admin.ModelAdmin):
   list_display_links = [
     'user'
   ]
-  list_display_filter = [
+  list_filter = [
     'gender',
     'marital_status',
     'employment_status',
@@ -62,53 +62,64 @@ class ProfileAdmin(admin.ModelAdmin):
     'user'
   ]
   fieldsets = (
-    (_('Personal Information'), {
-      'fields': (
-        'user',
-        'photo',
-        'id_photo',
-        'signature_photo',
-        'title',
-        'gender',
-        'date_of_birth',
-        'marital_status',
-        'title',
-      )
-    }),
-    (_('Contact Information'), {
-      'fields': (
-        'phone_number',
-        'address',
-        'city',
-        'country',
-      )
-    }),
-    (_('Identification'), {
-      'fields': (
-        'means_of_identification',
-        'id_issue_date',
-        'id_expiry_date',
-        'passport_number',
-      )
-    }),
-    (_('Employment Information'), {
-      'fields': (
-        'employment_status',
-        'employer_name',
-        'annual_income',
-        'date_of_employment',
-        'employer_address',
-        'employer_city',
-        'employer_state',
-      )
-    }),
+    (
+      _('Personal Information'),
+      {
+        'fields': (
+          'user',
+          'photo',
+          'id_photo',
+          'signature_photo',
+          'title',
+          'gender',
+          'date_of_birth',
+          'marital_status',
+        )
+      },
+    ),
+    (
+      _('Contact Information'),
+      {
+        'fields': (
+          'phone_number',
+          'address',
+          'city',
+          'country',
+        )
+      },
+    ),
+    (
+      _('Identification'),
+      {
+        'fields': (
+          'means_of_identification',
+          'id_issue_date',
+          'id_expiry_date',
+          'passport_number',
+        )
+      },
+    ),
+    (
+      _('Employment Information'), 
+      {
+        'fields': (
+          'employment_status',
+          'employer_name',
+          'annual_income',
+          'date_of_employment',
+          'employer_address',
+          'employer_city',
+          'employer_state',
+        )
+      },
+    ),
   )
   inlines = [NextOfKinInline]
 
   def full_name(self, obj) -> str:
     return obj.user.full_name
   
-  full_name.short_decription = _('Full name')
+  full_name.short_description = _('Full name')
 
   def email(self, obj) -> str:
     return obj.user.email
@@ -146,5 +157,5 @@ class NextOfKinAdmin(admin.ModelAdmin):
   def full_name(self, obj) -> str:
     return f"{obj.first_name} {obj.last_name}"
   
-  full_name.short_decription = _('Full name')
+  full_name.short_description = _('Full name')
   

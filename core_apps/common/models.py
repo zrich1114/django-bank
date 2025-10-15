@@ -45,25 +45,25 @@ class ContentView(TimeStampedModel):
     verbose_name_plural = _('Content Views')
     unique_together = ['content_type', 'object_id', 'user', 'viewer_ip']
 
-    def __str__(self):
-      return f'{self.content_type} viewed by {self.user.get_full_name if self.user else "Anonymous"} from IP {self.viewer_ip}'
-    
-    @classmethod
-    def record_view(cls, content_object: Any, user: Optional[User], viewer_ip: str) -> None:
-      content_type = ContentType.objects.get_for_model(content_object)
-      try:
-        view, created = cls.objects.get_or_created(
-          content_type=content_type,
-          object_id=content_object.id,
-          defaults={
-            'user': user,
-            'viewer_ip': viewer_ip,
-            'last_viewed': timezone.now()
-          },
-        )
-        if not created:
-          view.last_viewed = timezone.now()
-          view.save()
-      except IntegrityError:
-        pass
+  def __str__(self):
+    return f'{self.content_type} viewed by {self.user.get_full_name if self.user else "Anonymous"} from IP {self.viewer_ip}'
+  
+  @classmethod
+  def record_view(cls, content_object: Any, user: Optional[User], viewer_ip: Optional["str"]) -> None:
+    content_type = ContentType.objects.get_for_model(content_object)
+    try:
+      view, created = cls.objects.get_or_created(
+        content_type=content_type,
+        object_id=content_object.id,
+        defaults={
+          'user': user,
+          'viewer_ip': viewer_ip,
+          'last_viewed': timezone.now()
+        },
+      )
+      if not created:
+        view.last_viewed = timezone.now()
+        view.save()
+    except IntegrityError:
+      pass
 
