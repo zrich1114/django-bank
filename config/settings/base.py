@@ -245,7 +245,7 @@ cloudinary.config(
 COOKIE_NAME = 'access'
 COOKIE_SAMESITE = 'Lax'
 COOKIE_PATH = '/'
-COOKIE_HTTP_ONLY = True
+COOKIE_HTTPONLY = True
 COOKIE_SECURE = getenv('COOKIE_SECURE', 'True') == 'True'
 
 
