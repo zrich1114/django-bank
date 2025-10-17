@@ -1,4 +1,4 @@
-{% extends emails/base.html %} {% block title %} Your Login OTP {% endblock %}
+{% extends "emails/base.html" %} {% block title %} Your Login OTP {% endblock %}
 {% block content %}
 <h2>Your One-Time Password</h2>
 <p>Dear {{ user.full_name }},</p>

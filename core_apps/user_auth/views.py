@@ -60,6 +60,7 @@ class CustomTokenCreateView(TokenCreateView):
     send_otp_email(user.email, otp)
 
     logger.info(f'OTP sent for login to user: {user.email}')
+
     return Response(
       {
         'success': 'OTP sent to your email',
@@ -76,12 +77,13 @@ class CustomTokenCreateView(TokenCreateView):
     except Exception:
       email = request.data.get('email')
       user = User.objects.filter(email=email).first()
+
       if user:
         user.handle_failed_login_attempts()
         failed_attempts = user.failed_login_attempts
         logger.error(f'Failed login attempts: {failed_attempts} for user: {email}')
         if failed_attempts >= settings.LOGIN_ATTEMPTS:
-          Response(
+          return Response(
             {
               'error': f'You have exceeded the maximum number of login attempts. Your account has been locked for {settings.LOCKOUT_DURATION.total_seconds() / 60} minutes. An email has been sent to you with further instructions.'
             },
@@ -90,14 +92,14 @@ class CustomTokenCreateView(TokenCreateView):
       else:
         logger.error('Failed login attempt for non-existent user: {email}')
       
-        return Response(
-          {
-            'error': 'Your login credentials are not correct',
-          },
-          status=status.HTTP_400_BAD_REQUEST
-        )
-      
-      return self._action(serializer)
+      return Response(
+        {
+          'error': 'Your login credentials are not correct',
+        },
+        status=status.HTTP_400_BAD_REQUEST
+      )
+
+    return self._action(serializer)
   
 class CustomTokenRefreshView(TokenRefreshView):
   def post(self, request: Request, *args: Any, **kwargs: Any) -> Response:

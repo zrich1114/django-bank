@@ -184,7 +184,7 @@ SIMPLE_JWT = {
     'SIGNING_KEY': getenv('SIGNING_KEY'),
     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=30),
     'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
-    'ROTATE_REFRESH_TOKEN': True,
+    'ROTATE_REFRESH_TOKENS': True,
     'USER_ID': 'id',
     'USER_ID_CLAIM': 'user_id',
 }
